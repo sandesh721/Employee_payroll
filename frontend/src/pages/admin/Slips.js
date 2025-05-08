@@ -16,6 +16,7 @@ const AllSalarySlips = () => {
   const fetchSalarySlips = async () => {
     try {
       const response = await axios.get("/admin/salary-slips");
+      console.log("Fetched salary slips response:", response.data);
       setSalarySlips(response.data);
       setFilteredSlips(response.data); 
     } catch (error) {
@@ -29,7 +30,12 @@ const AllSalarySlips = () => {
       <h2>All Salary Slips</h2>
       {error && <div className="error">{error}</div>}
       
-      <FilterComponent salarySlips={salarySlips} setFilteredSlips={setFilteredSlips} />
+      <FilterComponent
+        data={salarySlips}
+        setFilteredData={setFilteredSlips}
+        showDepartment={true}
+        showSalarySort={true}
+      />
 
       <table>
         <thead>
@@ -49,7 +55,7 @@ const AllSalarySlips = () => {
                 <td>{slip.name}</td>
                 <td>{slip.designation}</td>
                 <td>{slip.netSalary}</td>
-                <td>{new Date(slip.generatedDate).toLocaleDateString()}</td>
+                <td>{new Date(slip.generatedAt).toLocaleDateString()}</td>
               </tr>
             ))
           ) : (

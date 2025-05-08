@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "../css/Filter.css";
 
-const FilterComponent = ({ salarySlips, setFilteredSlips }) => {
+const FilterComponent = ({
+  data = [],
+  setFilteredData,
+  showDepartment = true,
+  showSalarySort = true,
+}) => {
   const [search, setSearch] = useState("");
   const [designation, setDesignation] = useState("");
   const [department, setDepartment] = useState("");
@@ -11,52 +16,49 @@ const FilterComponent = ({ salarySlips, setFilteredSlips }) => {
   const [departmentOptions, setDepartmentOptions] = useState([]);
 
   useEffect(() => {
-    // Extract unique designations and departments for dropdowns
-    const designations = [...new Set(salarySlips.map(s => s.designation))];
-    const departments = [...new Set(salarySlips.map(s => s.department))];
+    const designations = [...new Set(data.map(item => item.designation))];
+    const departments = [...new Set(data.map(item => item.department))];
     setDesignationOptions(designations);
     setDepartmentOptions(departments);
-  }, [salarySlips]);
+  }, [data]);
 
   useEffect(() => {
     applyFilters();
   }, [search, designation, department, salarySort]);
 
   const applyFilters = () => {
-    let filtered = [...salarySlips];
+    let filtered = [...data];
 
-    // Text search on name, email, phone
     if (search.trim()) {
       const lower = search.toLowerCase();
       filtered = filtered.filter(
-        (slip) =>
-          slip.name.toLowerCase().includes(lower) ||
-          slip.email.toLowerCase().includes(lower) ||
-          slip.phone.toLowerCase().includes(lower)
+        (item) =>
+          (item.name?.toLowerCase() || "").includes(lower) ||
+          (item.email?.toLowerCase() || "").includes(lower) ||
+          (item.phone?.toLowerCase() || "").includes(lower)
       );
     }
 
     if (designation) {
-      filtered = filtered.filter(slip => slip.designation === designation);
+      filtered = filtered.filter(item => item.designation === designation);
     }
 
-    if (department) {
-      filtered = filtered.filter(slip => slip.department === department);
+    if (showDepartment && department) {
+      filtered = filtered.filter(item => item.department === department);
     }
 
-    if (salarySort === "asc") {
+    if (showSalarySort && salarySort === "asc") {
       filtered = filtered.sort((a, b) => a.salary - b.salary);
-    } else if (salarySort === "desc") {
+    } else if (showSalarySort && salarySort === "desc") {
       filtered = filtered.sort((a, b) => b.salary - a.salary);
     }
 
-    setFilteredSlips(filtered);
+    setFilteredData(filtered);
   };
 
   return (
     <div className="filter-component">
       <input
-        className="search-input"
         type="text"
         placeholder="Search by name, email, or phone"
         value={search}
@@ -70,18 +72,22 @@ const FilterComponent = ({ salarySlips, setFilteredSlips }) => {
         ))}
       </select>
 
-      <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-        <option value="">All Departments</option>
-        {departmentOptions.map((d, idx) => (
-          <option key={idx} value={d}>{d}</option>
-        ))}
-      </select>
+      {showDepartment && (
+        <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+          <option value="">All Departments</option>
+          {departmentOptions.map((d, idx) => (
+            <option key={idx} value={d}>{d}</option>
+          ))}
+        </select>
+      )}
 
-      <select value={salarySort} onChange={(e) => setSalarySort(e.target.value)}>
-        <option value="">Sort Salary</option>
-        <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
-      </select>
+      {showSalarySort && (
+        <select value={salarySort} onChange={(e) => setSalarySort(e.target.value)}>
+          <option value="">Sort Salary</option>
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      )}
     </div>
   );
 };

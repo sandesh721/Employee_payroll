@@ -58,7 +58,38 @@
   left: 0;
   z-index: 1100;
 }
+.sidebar .logo{
+  border-radius: 50px;
+  padding: 0;
+  margin: 0px auto 20px auto;
+}
+.logo {
+  width: 60px;
+  margin: 0 auto 20px auto;
+  display: block;
+  /* padding: 10px; */
+}
+.top-navbar .logo {
+  width: 60px;
+  margin: 0 10px;
+  vertical-align: middle;
+  border-radius: 50px;
+}
+.top-navbar {
+  display: flex;
+  align-items: center;
+  background-color: #1e1e2f;
+  padding: 10px;
+}
 
+.top-navbar a {
+  color: #fff;
+  margin-left: 20px;
+  text-decoration: none;
+}
+.top-navbar a:hover {
+  color: #4caf50;
+}
 /* Mobile responsiveness */
 @media screen and (max-width: 768px) {
   .sidebar {

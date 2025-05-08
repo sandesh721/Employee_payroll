@@ -36,14 +36,26 @@
     flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 20px;
+    justify-content: space-between;
   }
   
+ 
   .filter-component input,
   .filter-component select {
     padding: 8px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 6px;
+  }
+  
+
+  .filter-component input {
+    flex: 2;
     min-width: 200px;
+  }
+  
+  .filter-component select {
+    flex: 1;
+    min-width: 150px;
   }
   

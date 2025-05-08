@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axiosInstance";
 import "../../css/Login.css";
@@ -10,6 +10,18 @@ const Login = () => {
     password: "",
     role: "EMPLOYEE",
   });
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      if (user.role === "ADMIN") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/employee/profile");
+      }
+    }
+  }, []);
+  
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 

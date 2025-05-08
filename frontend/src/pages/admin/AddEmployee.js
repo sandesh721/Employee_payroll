@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "../../api/axiosInstance";
 import "../../css/AddEmployee.css";
-
+import FilterComponent from "../../components/Filter";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 const departments = ["HR", "Finance", "IT", "Marketing", "Operations"];
 const designations = ["Manager", "Team Lead", "Developer", "Analyst", "Intern"];
 
@@ -68,7 +70,7 @@ const AddEmployee = () => {
 
     try {
       const response = await axios.post("/admin/add-employee", formData);
-      setMessage(response.data);
+      toast.success(response.data);
       setError("");
       setFormData({
         name: "",
@@ -84,7 +86,7 @@ const AddEmployee = () => {
     } catch (err) {
       const errorMsg =
         err.response?.data?.message || err.response?.data || "Error occurred";
-      setError(errorMsg);
+        toast.error(errorMsg);
       setMessage("");
     }
     
@@ -97,53 +99,74 @@ const AddEmployee = () => {
       {error && <div className="error">{error}</div>}
 
       <form onSubmit={handleSubmit} className="employee-form">
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
-        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-        <input type="text" name="phone" placeholder="Phone" value={formData.phone} onChange={handleChange} required />
-        <select name="gender" value={formData.gender} onChange={handleChange} required>
-          <option value="">Select Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
+  <div className="form-group">
+    <label>Name</label>
+    <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+  </div>
 
-        <select name="department" value={formData.department} onChange={handleChange} required>
-          <option value="">Select Department</option>
-          {departments.map((dept) => (
-            <option key={dept} value={dept}>{dept}</option>
-          ))}
-        </select>
+  <div className="form-group">
+    <label>Email</label>
+    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+  </div>
 
-        <select name="designation" value={formData.designation} onChange={handleChange} required>
-          <option value="">Select Designation</option>
-          {designations.map((des) => (
-            <option key={des} value={des}>{des}</option>
-          ))}
-        </select>
+  <div className="form-group">
+    <label>Phone</label>
+    <input type="text" name="phone" value={formData.phone} onChange={handleChange} required />
+  </div>
 
-        <input
-          type="number"
-          name="salary"
-          placeholder="Salary(Monthly)"
-          value={formData.salary}
-          onChange={handleChange}
-          required
-        />
+  <div className="form-group">
+    <label>Gender</label>
+    <select name="gender" value={formData.gender} onChange={handleChange} required>
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
 
-        <div className="password-section">
-          <input
-            type="text"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            readOnly
-            required
-          />
-          <button type="button" onClick={generatePassword} className="generate-btn">Generate</button>
-        </div>
+  <div className="form-group">
+    <label>Department</label>
+    <select name="department" value={formData.department} onChange={handleChange} required>
+      <option value="">Select Department</option>
+      {departments.map((dept) => (
+        <option key={dept} value={dept}>{dept}</option>
+      ))}
+    </select>
+  </div>
 
-        <button type="submit">Add Employee</button>
-      </form>
+  <div className="form-group">
+    <label>Designation</label>
+    <select name="designation" value={formData.designation} onChange={handleChange} required>
+      <option value="">Select Designation</option>
+      {designations.map((des) => (
+        <option key={des} value={des}>{des}</option>
+      ))}
+    </select>
+  </div>
+
+  <div className="form-group">
+    <label>Salary (Monthly)</label>
+    <input type="number" name="salary" value={formData.salary} onChange={handleChange} required />
+  </div>
+
+  <div className="form-group" style={{ flex: '1 1 100%' }}>
+    <label>Password</label>
+    <div className="password-section">
+      <input
+        type="text"
+        name="password"
+        value={formData.password}
+        readOnly
+        required
+      />
+      <button type="button" onClick={generatePassword} className="generate-btn">Generate</button>
+    </div>
+  </div>
+
+  <button type="submit">Add Employee</button>
+</form>
+<ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+
     </div>
   );
 };

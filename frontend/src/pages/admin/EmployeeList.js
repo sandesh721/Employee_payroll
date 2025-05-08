@@ -3,12 +3,14 @@ import axios from "../../api/axiosInstance";
 import "../../css/AllEmployees.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FilterComponent from "../../components/Filter";
 
 
 const AllEmployees = () => {
   const [employees, setEmployees] = useState([]);
   const [salarySlips, setSalarySlips] = useState([]);
   const [error, setError] = useState("");
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
 
   useEffect(() => {
     fetchEmployees();
@@ -18,7 +20,9 @@ const AllEmployees = () => {
     try {
       const res = await axios.get("/admin/employees");
       console.log("Fetched employees response:", res.data); 
-      setEmployees(Array.isArray(res.data) ? res.data : res.data.employees || []);
+      const data = Array.isArray(res.data) ? res.data : res.data.employees || [];
+      setEmployees(data);
+      setFilteredEmployees(data);
     } catch (err) {
       toast.error("Failed to fetch employees.");
     }
@@ -55,6 +59,13 @@ const AllEmployees = () => {
     <div className="all-employees">
       <h2>All Employees</h2>
       {error && <div className="error">{error}</div>}
+      <FilterComponent
+        data={employees}
+        setFilteredData={setFilteredEmployees}
+        showDepartment={true}
+        showSalarySort={false}
+      />
+
       <button 
         onClick={handleCalculate} 
         className="calculate-btn"
@@ -71,7 +82,7 @@ const AllEmployees = () => {
           </tr>
         </thead>
         <tbody>
-          {employees.map((emp) => (
+          {(filteredEmployees || []).map((emp) => (
             <tr key={emp.id}>
               <td>{emp.id}</td>
               <td>{emp.name}</td>
@@ -84,6 +95,7 @@ const AllEmployees = () => {
             </tr>
           ))}
         </tbody>
+
       </table>
 
       
