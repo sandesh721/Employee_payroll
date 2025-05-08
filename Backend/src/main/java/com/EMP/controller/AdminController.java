@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +19,13 @@ import com.EMP.dto.LoginRequest;
 import com.EMP.entity.Admin;
 import com.EMP.entity.Employee;
 import com.EMP.entity.SalarySlip;
+import com.EMP.repository.AdminRepository;
 import com.EMP.repository.EmployeeRepository;
 import com.EMP.repository.SalarySlipRepository;
 import com.EMP.service.AdminService;
 import com.EMP.service.EmployeeService;
+
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/admin")
@@ -34,7 +38,8 @@ public class AdminController {
     private EmployeeRepository employeeRepository;
     @Autowired
     private EmployeeService employeeService;
-    
+    @Autowired
+    private AdminRepository adminRepository;
     @Autowired
     private SalarySlipRepository salarySlipRepository;
 
@@ -106,18 +111,50 @@ public class AdminController {
     }
     
     @DeleteMapping("/employee/{id}")
+    @Transactional
     public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
         if (!employeeRepository.existsById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
         }
-
+        salarySlipRepository.deleteByEmployeeId(id);
         employeeRepository.deleteById(id);
         return ResponseEntity.ok("Employee deleted successfully");
     }
-//    @GetMapping("/salary-slips")
-//    public List<SalarySlip> getAllSalarySlips() {
-//        return salarySlipRepository.getAll();
-//    }
+    @GetMapping("/salary-slips")
+    public List<SalarySlip> getAllSalarySlips() {
+        return salarySlipRepository.findAll();
+    }
+    @GetMapping("/all-admins")
+    public List<Admin> getAllAdmins() {
+        return adminRepository.findAll();
+    }
+    
+    @PostMapping("/profile")
+    public ResponseEntity<Admin> getAdminByEmail(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        Admin admin = adminRepository.findByEmail(email);
+        if (admin == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(admin);
+    }
+    
+    @PutMapping("/update-profile")
+    public ResponseEntity<String> updateProfile(@RequestBody Admin updatedAdmin) {
+        Admin existingAdmin = adminRepository.findByEmail(updatedAdmin.getEmail());
+
+        if (existingAdmin == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Admin not found.");
+        }
+
+        existingAdmin.setName(updatedAdmin.getName());
+        existingAdmin.setPhone(updatedAdmin.getPhone());
+        existingAdmin.setGender(updatedAdmin.getGender());
+
+        adminRepository.save(existingAdmin);
+        return ResponseEntity.ok("Profile updated successfully.");
+    }
+
 
 
 }

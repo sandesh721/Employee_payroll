@@ -85,7 +85,7 @@ public class AdminServiceImpl implements AdminService {
             slip.setBasicSalary(basic);
             slip.setTax(tax);
             slip.setNetSalary(net);
-
+            slip.setDepartment(e.getDepartment());
             slips.add(salarySlipRepository.save(slip));
         }
 

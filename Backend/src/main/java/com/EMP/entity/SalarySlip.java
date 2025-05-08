@@ -16,11 +16,21 @@ public class SalarySlip {
     private Long employeeId;
     private String name;
     private String designation;
+    private String department;
     private double basicSalary;
     private double tax;
     private double netSalary;
 
     private LocalDate generatedAt = LocalDate.now();
+    
+    
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
 
 	public Long getId() {
 		return id;
