@@ -1,0 +1,9 @@
+:root {
+  --primary-color: #4caf50;
+  --text-color: #333;
+  --danger-color: #f44336;
+}
+
+body {
+  color: var(--text-color);
+}

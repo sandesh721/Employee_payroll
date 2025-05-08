@@ -1,0 +1,53 @@
+package com.EMP.serviceImpl;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.EMP.entity.Admin;
+import com.EMP.repository.AdminRepository;
+import com.EMP.repository.EmployeeRepository;
+import com.EMP.repository.SalarySlipRepository;
+import com.EMP.service.AdminService;
+
+@Service
+public class AdminServiceImpl implements AdminService {
+
+    @Autowired
+    private AdminRepository adminRepo;
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    @Autowired 
+    private SalarySlipRepository salarySlipRepository;
+    @Override
+    public Admin findAdminByEmail(String email) {
+        return adminRepo.findByEmail(email);
+    }
+
+    @Override
+    public String authenticateAdmin(String email, String password) {
+        Admin admin = adminRepo.findByEmail(email);
+        if (admin != null && admin.getPassword().equals(password)) {
+            return "Login Successful";
+        } else {
+            return "Invalid Credentials";
+        }
+    }
+    @Override
+    public Map<String, Integer> getDashboardStats() {
+        Map<String, Integer> stats = new HashMap<>();
+
+        int totalEmployees = employeeRepository.countEmployees();
+        int totalAdmins = adminRepo.countAdmins();
+        int totalSlips = salarySlipRepository.countSlips();
+
+        stats.put("employees", totalEmployees);
+        stats.put("admins", totalAdmins);
+        stats.put("slips", totalSlips);
+
+        return stats;
+    }
+
+}

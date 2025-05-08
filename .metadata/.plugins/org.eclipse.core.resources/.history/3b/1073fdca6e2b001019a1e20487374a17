@@ -1,0 +1,27 @@
+package com.EMP.serviceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.EMP.entity.Employee;
+import com.EMP.repository.EmployeeRepository;
+
+@Service
+public class EmployeeServiceImpl {
+
+    @Autowired
+    private EmployeeRepository employeeRepo;
+
+    public Employee findEmployeeByEmail(String email) {
+        return employeeRepo.findByEmail(email);
+    }
+
+    public String authenticateEmployee(String email, String password) {
+        Employee employee = employeeRepo.findByEmail(email);
+        if (employee != null && employee.getPassword().equals(password)) {
+            return "Login Successful";
+        } else {
+            return "Invalid Credentials";
+        }
+    }
+}

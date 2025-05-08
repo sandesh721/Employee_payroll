@@ -1,0 +1,38 @@
+package com.EMP.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.EMP.dto.LoginRequest;
+import com.EMP.service.AdminService;
+
+@RestController
+@RequestMapping("/admin")
+
+public class AdminController {
+
+    @Autowired
+    private AdminService adminService;
+
+    // Admin login
+    @PostMapping("/login")
+    public ResponseEntity<String> adminLogin(@RequestBody LoginRequest loginRequest) {
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
+
+        String result = adminService.authenticateAdmin(email, password);
+
+        if (result.equals("Login Successful")) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.badRequest().body(result);
+        }
+    }
+
+    // Other Admin-related endpoints would go here
+}

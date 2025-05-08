@@ -1,0 +1,45 @@
+package com.EMP.serviceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.EMP.dto.LoginRequest;
+import com.EMP.dto.LoginResponse;
+import com.EMP.entity.Admin;
+import com.EMP.entity.Employee;
+import com.EMP.repository.AdminRepository;
+import com.EMP.repository.EmployeeRepository;
+import com.EMP.service.AuthService;
+
+@Service
+public class AuthServiceImpl implements AuthService {
+
+    @Autowired
+    private AdminRepository adminRepo;
+
+    @Autowired
+    private EmployeeRepository empRepo;
+
+    @Override
+    public LoginResponse login(LoginRequest request) {
+        Admin admin = adminRepo.findByEmail(request.getEmail());
+        if (admin != null) {
+            if (admin.getPassword().equals(request.getPassword())) {
+                return new LoginResponse(true, "Login successful", "admin");
+            } else {
+                return new LoginResponse(false, "Incorrect password", null);
+            }
+        }
+
+        Employee emp = empRepo.findByEmail(request.getEmail());
+        if (emp != null) {
+            if (emp.getPassword().equals(request.getPassword())) {
+                return new LoginResponse(true, "Login successful", "employee");
+            } else {
+                return new LoginResponse(false, "Incorrect password", null);
+            }
+        }
+
+        return new LoginResponse(false, "User not found", null);
+    }
+}

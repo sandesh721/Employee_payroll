@@ -1,0 +1,5 @@
+package com.EMP.repository;
+
+public class UserRepository {
+
+}

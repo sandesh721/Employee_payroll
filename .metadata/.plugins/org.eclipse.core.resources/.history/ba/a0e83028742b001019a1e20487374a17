@@ -1,0 +1,11 @@
+package com.EMP.service;
+
+import java.util.Map;
+
+import com.EMP.entity.Admin;
+
+public interface AdminService {
+	Admin findAdminByEmail(String email);
+    String authenticateAdmin(String email, String password);
+	Map<String, Integer> getDashboardStats();
+}

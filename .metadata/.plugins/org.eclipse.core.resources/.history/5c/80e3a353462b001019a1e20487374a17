@@ -1,0 +1,9 @@
+package com.EMP.repository;
+
+import com.EMP.entity.Employee;
+
+public interface EmployeeRepository {
+
+	Employee findByEmail(String email);
+
+}

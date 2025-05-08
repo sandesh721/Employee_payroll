@@ -1,0 +1,8 @@
+package com.EMP.service;
+
+import com.EMP.dto.LoginRequest;
+import com.EMP.dto.LoginResponse;
+
+public interface AuthService {
+	LoginResponse login(LoginRequest loginRequest);
+}

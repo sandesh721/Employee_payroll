@@ -1,0 +1,74 @@
+.salary-slips-container {
+  padding: 20px;
+  margin-left: 250px;
+}
+
+.salary-slips-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.salary-slips-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.salary-slips-container th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.salary-slips-container th {
+  background-color: #f4f4f4;
+}
+
+.salary-slips-container .error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.salary-slips-container .filter-component {
+  margin: 20px 0;
+  background-color: #f4f4f4;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.salary-slips-container .filter-field {
+  margin-bottom: 10px;
+}
+
+.salary-slips-container .filter-field label {
+  margin-right: 10px;
+}
+
+.salary-slips-container .filter-field input,
+.salary-slips-container .filter-field select {
+  padding: 8px;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+
+.salary-slips-container button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.salary-slips-container button:hover {
+  background-color: #0056b3;
+}
+
+.salary-slips-container .search-input {
+  margin: 10px 0;
+  padding: 8px;
+  width: 250px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}

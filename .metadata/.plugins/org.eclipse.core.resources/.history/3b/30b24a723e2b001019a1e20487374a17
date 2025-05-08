@@ -1,0 +1,5 @@
+package com.EMP.service;
+
+public interface AuthService {
+
+}

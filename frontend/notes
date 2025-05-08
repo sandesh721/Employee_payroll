@@ -1,0 +1,105 @@
+com.yourapp
+│
+├── controller
+│   ├── AuthController.java
+│   ├── AdminController.java
+│   └── EmployeeController.java
+│
+├── entity
+│   ├── User.java
+│   └── Salary.java
+│
+├── repository
+│   ├── UserRepository.java
+│   └── SalaryRepository.java
+│
+├── service
+│   └── AuthService.java
+│
+├── serviceImpl
+│   └── AuthServiceImpl.java
+│
+└── config
+    ├── JwtFilter.java
+    └── SecurityConfig.java
+1. Overview Widgets (Top Stats)
+Total Employees
+
+Total Admins
+
+Total Salary Slips Generated
+
+Pending Approvals (if any)
+
+Recent Activities
+
+2. Employee Management
+Add New Employee
+
+View All Employees
+
+Edit/Delete Employee Details
+
+Search/Filter Employees
+
+Bulk Upload Employees (optional)
+
+3. Admin Management
+Add New Admin
+
+View Admin List
+
+Manage Roles & Permissions (if needed)
+
+4. Salary Management
+Generate Salary Slip
+
+View All Slips
+
+Filter slips by date/month/employee
+
+Download or Email Slips
+
+5. Notifications / Alerts
+Birthday Alerts
+
+Document Expiry Alerts
+
+Contract Renewal Alerts
+
+6. Recent Activities
+Recent logins (Admin & Employees)
+
+Recent changes made (e.g., new employee added, salary updated)
+
+7. Profile Settings
+View/Edit Admin Profile
+
+Change Password
+
+Logout
+
+🖥️ Optional Advanced Features
+Reports & Analytics
+
+Monthly Salary Reports
+
+Department-wise Salary Stats
+
+Charts/Graphs using libraries like Recharts or Chart.js
+
+Audit Logs
+
+Record of admin actions for accountability
+
+System Settings
+
+Update organization info, logo
+
+Define salary components (HRA, Basic, Allowances)
+
+Support/Help Section
+
+Contact IT/Support
+
+User Guide or FAQ

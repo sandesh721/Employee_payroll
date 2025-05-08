@@ -1,0 +1,8 @@
+package com.EMP.service;
+
+import com.EMP.entity.Admin;
+
+public interface AdminService {
+	Admin findAdminByEmail(String email);
+    String authenticateAdmin(String email, String password);
+}
