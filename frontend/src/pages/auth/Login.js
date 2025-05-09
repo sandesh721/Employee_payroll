@@ -2,9 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axiosInstance";
 import "../../css/Login.css";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
 
 const Login = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -45,7 +51,7 @@ const Login = () => {
         JSON.stringify({ email: formData.email, role: formData.role })
       );
 
-      setMessage("Login successful");
+      toast.success("Login successful");
       setError("");
 
       if (formData.role === "ADMIN") {
@@ -55,7 +61,7 @@ const Login = () => {
         navigate("/employee/profile");
       }
     } catch (err) {
-      setError("Invalid credentials or server error");
+      toast.error("Invalid credentials");
       setMessage("");
     }
   };
@@ -76,14 +82,23 @@ const Login = () => {
           required
         /><br />
 
+      <div className="password-field">
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
           required
-        /><br />
+        />
+        <FontAwesomeIcon
+          icon={showPassword ? faEyeSlash : faEye}
+          className="toggle-icon"
+          onClick={() => setShowPassword(!showPassword)}
+          title={showPassword ? "Hide Password" : "Show Password"}
+        />
+      </div>
+      <br />
 
         <select
           name="role"
@@ -97,6 +112,7 @@ const Login = () => {
 
         <button type="submit">Login</button>
       </form>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
     </div>
   );
 };

@@ -54,4 +54,16 @@
     color: red;
     margin-bottom: 10px;
   }
+  .password-field {
+    position: relative;
+    /* margin-bottom: 10px; */
+  }
+  .toggle-icon {
+    position: absolute;
+    right: 15px;
+    top: 40%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #555;
+  }
   

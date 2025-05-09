@@ -1,7 +1,7 @@
 .filter-component {
     margin: 20px;
     padding: 10px;
-    background-color: #f4f4f4;
+    /* background-color: #f4f4f4; */
     border-radius: 5px;
   }
   
@@ -51,7 +51,7 @@
 
   .filter-component input {
     flex: 2;
-    min-width: 200px;
+    min-width: 100px;
   }
   
   .filter-component select {

@@ -9,6 +9,7 @@ const Navbar = ({ role: propRole }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [role, setRole] = useState(propRole || null);
 
+  
   // Load role from localStorage on mount
   useEffect(() => {
     if (!propRole) {
@@ -17,8 +18,10 @@ const Navbar = ({ role: propRole }) => {
         setRole(storedUser.role);
       }
     }
-  },);
-
+  });
+  if (location.pathname === "/") {
+    return null;
+  }
   const getLinkClass = (path) =>
     location.pathname === path ? "nav-link active-tab" : "nav-link";
 

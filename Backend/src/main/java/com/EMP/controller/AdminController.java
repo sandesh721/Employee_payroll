@@ -154,6 +154,33 @@ public class AdminController {
         adminRepository.save(existingAdmin);
         return ResponseEntity.ok("Profile updated successfully.");
     }
+    @GetMapping("/viewEmployee/{id}")
+    public ResponseEntity<Employee> viewEmployeeById(@PathVariable Long id) {
+        Employee emp = employeeRepository.findById(id).orElse(null);
+        if (emp == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(emp);
+    }
+    @PostMapping("/update-Empprofile")
+    public ResponseEntity<String> updateProfile(@RequestBody Employee updatedEmployee) {
+        Employee existingEmployee = employeeRepository.findByEmail(updatedEmployee.getEmail());
+
+        if (existingEmployee == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found.");
+        }
+
+        existingEmployee.setName(updatedEmployee.getName());
+        existingEmployee.setPhone(updatedEmployee.getPhone());
+        existingEmployee.setGender(updatedEmployee.getGender());
+        existingEmployee.setDepartment(updatedEmployee.getDepartment());
+        existingEmployee.setDesignation(updatedEmployee.getDesignation());
+        existingEmployee.setEmail(updatedEmployee.getEmail());
+        existingEmployee.setSalary(updatedEmployee.getSalary());
+
+        employeeRepository.save(existingEmployee);
+        return ResponseEntity.ok("Profile updated successfully.");
+    }
+
+
 
 
 

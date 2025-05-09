@@ -20,5 +20,6 @@ public interface SalarySlipRepository extends JpaRepository<SalarySlip, Long> {
 	@Query("DELETE FROM SalarySlip s WHERE s.employeeId = :empId AND MONTH(s.generatedAt) = :month AND YEAR(s.generatedAt) = :year")
 	void deleteByEmployeeIdAndMonth(@Param("empId") Long empId, @Param("month") int month, @Param("year") int year);
 	void deleteByEmployeeId(Long id);
+	List<SalarySlip> findByEmployeeId(Long id);
 
 }

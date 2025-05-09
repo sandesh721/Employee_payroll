@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/profile.css";
+import "../../css/global.css"
 const ProfilePage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -49,7 +50,7 @@ const ProfilePage = () => {
   if (error) return <div className="form-error">{error}</div>;
 
   return (
-    <div className="profile-page">
+    <div className="profile-page" id="main-content">
       <Navbar role={role} />
       <h2 className="form-title">My Profile</h2>
 

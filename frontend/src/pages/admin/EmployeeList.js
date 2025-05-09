@@ -4,7 +4,7 @@ import "../../css/AllEmployees.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterComponent from "../../components/Filter";
-
+import "../../css/global.css"
 
 const AllEmployees = () => {
   const [employees, setEmployees] = useState([]);
@@ -56,7 +56,7 @@ const AllEmployees = () => {
   };
 
   return (
-    <div className="all-employees">
+    <div className="all-employees" id="main-content">
       <h2>All Employees</h2>
       {error && <div className="error">{error}</div>}
       <FilterComponent
@@ -75,7 +75,7 @@ const AllEmployees = () => {
       </button>
 
 
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>ID</th><th>Name</th><th>Designation</th><th>Basic Salary</th><th>Actions</th>
@@ -89,7 +89,7 @@ const AllEmployees = () => {
               <td>{emp.designation}</td>
               <td>{emp.salary}</td>
               <td>
-                <button onClick={() => window.location.href=`/admin/employee/${emp.id}`}>View</button>
+                <button onClick={() => window.location.href=`/admin/viewEmployee/${emp.id}`}>View</button>
                 <button onClick={() => handleDelete(emp.id)}>Delete</button>
               </td>
             </tr>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "../../api/axiosInstance";
 import Navbar from "../../components/Navbar";
 import "../../css/Dashboard.css"; 
+import "../../css/global.css"
 const Dashboard = () => {
   const role = JSON.parse(localStorage.getItem("user"))?.role;
   const [stats, setStats] = useState({
@@ -23,7 +24,7 @@ const Dashboard = () => {
     fetchStats();
   }, []);
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container" id="main-content">
         <Navbar role={role} />
       <h2 className="dashboard-title">Admin Dashboard</h2>
       <div className="dashboard-cards">

@@ -4,9 +4,8 @@ import "../../css/AddEmployee.css";
 import FilterComponent from "../../components/Filter";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
-const departments = ["HR", "Finance", "IT", "Marketing", "Operations"];
-const designations = ["Manager", "Team Lead", "Developer", "Analyst", "Intern"];
-
+import { departments, designations } from "../../config"; 
+import "../../css/global.css"
 const AddEmployee = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -93,7 +92,7 @@ const AddEmployee = () => {
   };
 
   return (
-    <div className="add-employee-container">
+    <div className="add-employee-container" id="main-content">
       <h2>Add New Employee</h2>
       {message && <div className="success">{message}</div>}
       {error && <div className="error">{error}</div>}

@@ -4,6 +4,7 @@ import "../../css/AddAdmin.css";
 import Navbar from "../../components/Navbar";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import "../../css/global.css"
 const AddAdmin = () => {
   const role = JSON.parse(localStorage.getItem("user"))?.role;
 
@@ -81,7 +82,7 @@ const AddAdmin = () => {
   }, []);
 
   return (
-    <div className="add-admin-container">
+    <div className="add-admin-container" id="main-content">
       <Navbar role={role} />
       <button className="open-modal-btn" onClick={() => setShowModal(true)}>➕ Add Admin</button>
 

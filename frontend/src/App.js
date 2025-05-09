@@ -12,6 +12,8 @@ import Profile from './pages/employee/Profile';
 import SalarySlip from './pages/employee/SalarySlip';
 import ErrorPage from './pages/ErrorPage';
 import Navbar from './components/Navbar';
+import HomePage from './pages/Homepage';
+import ViewEmployee from './pages/admin/ViewEmployee';
 
 function App() {
   return (
@@ -19,7 +21,8 @@ function App() {
       <Navbar role={JSON.parse(localStorage.getItem('user'))?.role} /> 
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
         
         {/* Admin Routes */}
         <Route
@@ -35,6 +38,14 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={['ADMIN']}>
               <EmployeeList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/viewEmployee/:id"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <ViewEmployee />
             </ProtectedRoute>
           }
         />
