@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.EMP.dto.EmployeeDTO;
 import com.EMP.entity.Employee;
 import com.EMP.repository.EmployeeRepository;
 import com.EMP.service.EmployeeService;
@@ -20,9 +21,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Autowired
     private EmployeeRepository employeeRepo;
-    
-    @Autowired
-    private EmployeeRepository employeeRepository;
     
     
     public Employee findEmployeeByEmail(String email) {
@@ -46,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         return "Employee added successfully.";
     }
 	@Override
-	 public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
+	public List<EmployeeDTO> getAllEmployees() {
+		return employeeRepo.fetchAllEmployeeDTOs();
+	}
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.EMP.dto.EmployeeDTO;
 import com.EMP.dto.LoginRequest;
 import com.EMP.entity.Employee;
 import com.EMP.entity.SalarySlip;
@@ -46,9 +47,9 @@ public class EmployeeController {
         }
     }
     @PostMapping("/profile")
-    public ResponseEntity<Employee> getAdminByEmail(@RequestBody Map<String, String> request) {
+    public ResponseEntity<EmployeeDTO> getAdminByEmail(@RequestBody Map<String, String> request) {
         String email = request.get("email");
-        Employee employee = employeeRepository.findByEmail(email);
+        EmployeeDTO employee = employeeRepository.fetchEmployeeDTOByEmail(email);
         if (employee == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 
+import com.EMP.dto.EmployeeDTO;
 import com.EMP.entity.Employee;
 
 public interface EmployeeService {
@@ -14,5 +15,6 @@ public interface EmployeeService {
 
 	String authenticateEmployee(String email, String password);
 
-	List<Employee> getAllEmployees();
+	List<EmployeeDTO> getAllEmployees();
+
 }

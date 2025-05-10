@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.EMP.dto.AdminDTO;
+import com.EMP.dto.EmployeeDTO;
 import com.EMP.dto.LoginRequest;
 import com.EMP.entity.Admin;
 import com.EMP.entity.Employee;
@@ -88,7 +90,7 @@ public class AdminController {
     @GetMapping("/employees")
     public ResponseEntity<?> getAllEmployees() {
         try {
-            List<Employee> employees = employeeService.getAllEmployees();
+            List<EmployeeDTO> employees = employeeService.getAllEmployees();
             if (employees.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No employees found.");
             }
@@ -125,14 +127,14 @@ public class AdminController {
         return salarySlipRepository.findAll();
     }
     @GetMapping("/all-admins")
-    public List<Admin> getAllAdmins() {
-        return adminRepository.findAll();
+    public List<AdminDTO> getAllAdmins() {
+        return adminRepository.fetchAllAdminDTOs();
     }
     
     @PostMapping("/profile")
-    public ResponseEntity<Admin> getAdminByEmail(@RequestBody Map<String, String> request) {
+    public ResponseEntity<?> getAdminByEmail(@RequestBody Map<String, String> request) {
         String email = request.get("email");
-        Admin admin = adminRepository.findByEmail(email);
+        AdminDTO admin = adminRepository.fetchAdminDTOByEmail(email);
         if (admin == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -155,8 +157,8 @@ public class AdminController {
         return ResponseEntity.ok("Profile updated successfully.");
     }
     @GetMapping("/viewEmployee/{id}")
-    public ResponseEntity<Employee> viewEmployeeById(@PathVariable Long id) {
-        Employee emp = employeeRepository.findById(id).orElse(null);
+    public ResponseEntity<EmployeeDTO> viewEmployeeById(@PathVariable Long id) {
+        EmployeeDTO emp = employeeRepository.fetchEmployeeDTOs(id);
         if (emp == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(emp);
     }
