@@ -19,7 +19,7 @@
   
   .login-container input,
   .login-container select {
-    width: 90%;
+    width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 6px;
@@ -27,7 +27,7 @@
     font-size: 16px;
   }
   .login-container select{
-    width: 95%;
+    width: 100%;
   }
   .login-container button {
     width: 90%;
@@ -60,9 +60,9 @@
   }
   .toggle-icon {
     position: absolute;
-    right: 15px;
+    right: 10px;
     top: 40%;
-    transform: translateY(-50%);
+    transform: translateY(-40%);
     cursor: pointer;
     color: #555;
   }
