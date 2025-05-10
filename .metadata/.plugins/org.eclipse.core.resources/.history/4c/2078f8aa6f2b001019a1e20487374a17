@@ -1,9 +1,0 @@
-package com.EMP.service;
-
-import com.EMP.entity.Employee;
-
-public interface EmployeeService {
-	
-
-	String addEmployee(Employee employee);
-}

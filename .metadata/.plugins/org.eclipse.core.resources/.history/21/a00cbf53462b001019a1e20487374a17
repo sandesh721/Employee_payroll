@@ -1,9 +1,0 @@
-package com.EMP.repository;
-
-import com.EMP.entity.Admin;
-
-public interface AdminRepository {
-
-	Admin findByEmail(String email);
-
-}
