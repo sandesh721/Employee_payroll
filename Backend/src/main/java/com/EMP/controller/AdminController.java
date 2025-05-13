@@ -26,6 +26,7 @@ import com.EMP.repository.EmployeeRepository;
 import com.EMP.repository.SalarySlipRepository;
 import com.EMP.service.AdminService;
 import com.EMP.service.EmployeeService;
+import com.EMP.service.MailService;
 
 import jakarta.transaction.Transactional;
 
@@ -44,7 +45,10 @@ public class AdminController {
     private AdminRepository adminRepository;
     @Autowired
     private SalarySlipRepository salarySlipRepository;
-
+    
+    @Autowired
+    private MailService mailService;
+    
     // Admin login
     @PostMapping("/login")
     public ResponseEntity<String> adminLogin(@RequestBody LoginRequest loginRequest) {
@@ -70,6 +74,7 @@ public class AdminController {
     public ResponseEntity<String> addEmployee(@RequestBody Employee employee) {
         String result = employeeService.addEmployee(employee);
         if (result.equals("Employee added successfully.")) {
+        	mailService.sendAccountCreationEmail(employee.getEmail(), employee.getPassword());
             return ResponseEntity.ok(result);
         } else {
             return ResponseEntity.badRequest().body(result);
@@ -80,6 +85,7 @@ public class AdminController {
     public ResponseEntity<String> addAdmin(@RequestBody Admin admin) {
     	try {
             String response = adminService.addAdmin(admin);
+            mailService.sendAccountCreationEmail(admin.getEmail(), admin.getPassword());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

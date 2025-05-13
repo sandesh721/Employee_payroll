@@ -49,7 +49,7 @@ public class AdminServiceImpl implements AdminService {
         int totalSlips = salarySlipRepository.countSlips();
 
         stats.put("employees", totalEmployees);
-        stats.put("admins", totalAdmins);
+        stats.put("admins", totalAdmins); 
         stats.put("slips", totalSlips);
 
         return stats;
@@ -74,17 +74,19 @@ public class AdminServiceImpl implements AdminService {
         List<SalarySlip> slips = new ArrayList<>();
 
         for (Employee e : employees) {
-            double basic = e.getSalary();
-            double tax = calculateTax(basic);
-            double net = basic - tax;
+        	double monthlyBasic = e.getSalary();                  
+            double annualIncome = monthlyBasic * 12;              
+            double annualTax = calculateTax(annualIncome);        
+            double monthlyTax = annualTax / 12.0;                 
+            double netSalary = monthlyBasic - monthlyTax;
             salarySlipRepository.deleteByEmployeeIdAndMonth(e.getId(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
             SalarySlip slip = new SalarySlip();
             slip.setEmployeeId(e.getId());
             slip.setName(e.getName());
             slip.setDesignation(e.getDesignation());
-            slip.setBasicSalary(basic);
-            slip.setTax(tax);
-            slip.setNetSalary(net);
+            slip.setBasicSalary(monthlyBasic);
+            slip.setTax(monthlyTax);
+            slip.setNetSalary(netSalary);
             slip.setDepartment(e.getDepartment());
             slips.add(salarySlipRepository.save(slip));
         }
