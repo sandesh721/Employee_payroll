@@ -66,4 +66,8 @@
     cursor: pointer;
     color: #555;
   }
-  
+  .forgotPassword{
+    margin-top: 10px;
+    color: blue;
+    cursor: pointer;
+  }

@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axiosInstance";
 import "../../css/Login.css";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-
+import ForgotPasswordModal from "../../components/ForgotPasswordModal";
 
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgotModal, setShowForgotModal] = useState(false); 
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -27,9 +29,6 @@ const Login = () => {
       }
     }
   }, []);
-  
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,26 +51,31 @@ const Login = () => {
       );
 
       toast.success("Login successful");
-      setError("");
 
       if (formData.role === "ADMIN") {
-        console.log("Admin logged in");
         navigate("/admin/dashboard");
       } else {
         navigate("/employee/profile");
       }
     } catch (err) {
       toast.error("Invalid credentials");
-      setMessage("");
+    }
+  };
+
+  // Forgot Password Handler
+  const handleResetPassword = async (data) => {
+    try {
+      const response = await axios.post("/api/reset-password-otp", data);
+      toast.success(response.data);
+      setShowForgotModal(false);
+    } catch (error) {
+      toast.error("Failed to reset password.");
     }
   };
 
   return (
     <div className="login-container">
       <h2>Login</h2>
-      {message && <div className="success">{message}</div>}
-      {error && <div className="error">{error}</div>}
-
       <form onSubmit={handleLogin}>
         <input
           type="email"
@@ -80,25 +84,26 @@ const Login = () => {
           value={formData.email}
           onChange={handleChange}
           required
-        /><br />
+        />
+        <br />
 
-      <div className="password-field">
-        <input
-          type={showPassword ? "text" : "password"}
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <FontAwesomeIcon
-          icon={showPassword ? faEyeSlash : faEye}
-          className="toggle-icon"
-          onClick={() => setShowPassword(!showPassword)}
-          title={showPassword ? "Hide Password" : "Show Password"}
-        />
-      </div>
-      <br />
+        <div className="password-field">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <FontAwesomeIcon
+            icon={showPassword ? faEyeSlash : faEye}
+            className="toggle-icon"
+            onClick={() => setShowPassword(!showPassword)}
+            title={showPassword ? "Hide Password" : "Show Password"}
+          />
+        </div>
+        <br />
 
         <select
           name="role"
@@ -108,13 +113,25 @@ const Login = () => {
         >
           <option value="EMPLOYEE">Employee</option>
           <option value="ADMIN">Admin</option>
-        </select><br />
+        </select>
+        <br />
 
         <button type="submit">Login</button>
       </form>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+
+      <p className="forgotPassword" onClick={() => setShowForgotModal(true)}>
+        Forgot Password?
+      </p>
+
+      <ToastContainer position="top-right" autoClose={3000} />
+
+      {showForgotModal && (
+        <ForgotPasswordModal
+          onClose={() => setShowForgotModal(false)}
+          onResetPassword={handleResetPassword}
+        />
+      )}
     </div>
   );
 };
-
 export default Login;
