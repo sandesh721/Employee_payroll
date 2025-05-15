@@ -22,6 +22,7 @@ const AddEmployee = () => {
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     if (e.target.name === "salary") {
@@ -60,6 +61,7 @@ const AddEmployee = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const validationError = validate();
     if (validationError) {
       setError(validationError);
@@ -71,6 +73,7 @@ const AddEmployee = () => {
       const response = await axios.post("/admin/add-employee", formData);
       toast.success(response.data);
       setError("");
+      setLoading(false);
       setFormData({
         name: "",
         email: "",
@@ -162,7 +165,9 @@ const AddEmployee = () => {
     </div>
   </div>
 
-  <button type="submit">Add Employee</button>
+  <button type="submit" disabled={loading}>
+    {loading ? "Adding..." : "Add Employee"}
+  </button>
 </form>
 <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
 

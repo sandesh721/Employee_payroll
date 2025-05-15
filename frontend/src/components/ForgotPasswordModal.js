@@ -90,9 +90,13 @@ const ForgotPasswordModal = ({ onClose }) => {
         </div>
 
         <div className="form-group">
-          <button onClick={handleSendOtp} className="send-otp">
-            Send OTP
-          </button>
+           <button
+                onClick={handleSendOtp}
+                className="send-otp"
+                disabled={loading} 
+            >
+                {loading ? "Sending..." : "Send OTP"} 
+            </button>
         </div>
 
         {otpSent && (

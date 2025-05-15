@@ -63,7 +63,7 @@ const ViewEmployee = () => {
       return (
         <div className="profile-page" id="main-content">
           <Navbar role={role} />
-          <h2 className="form-title">My Profile</h2>
+          <h2 className="form-title">Profile</h2>
     
           <div className="form-grid">
             <div className="form-group">
