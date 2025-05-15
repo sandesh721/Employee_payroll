@@ -5,22 +5,33 @@ public class AdminDTO {
     private String name;
     private String email;
     private String phone;
+    private String gender;
 
     // Constructors
     public AdminDTO() {}
 
-    public AdminDTO(Long id, String name, String email, String phone) {
+    public AdminDTO(Long id, String name, String email, String phone, String gender) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.gender = gender;
     }
 
     // Getters and Setters
+    
     public Long getId() {
         return id;
     }
-    public void setId(Long id) {
+    public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public void setId(Long id) {
         this.id = id;
     }
     public String getName() {

@@ -18,10 +18,10 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
     @Query("SELECT COUNT(a) FROM Admin a")
     int countAdmins();
     
-    @Query("SELECT new com.EMP.dto.AdminDTO(a.id, a.name, a.email, a.phone) FROM Admin a WHERE a.email = :email")
+    @Query("SELECT new com.EMP.dto.AdminDTO(a.id, a.name, a.email, a.phone, a.gender) FROM Admin a WHERE a.email = :email")
     AdminDTO fetchAdminDTOByEmail(@Param("email") String email);
 
-    @Query("SELECT new com.EMP.dto.AdminDTO(a.id, a.name, a.email, a.phone) FROM Admin a")
+    @Query("SELECT new com.EMP.dto.AdminDTO(a.id, a.name, a.email, a.phone, a.gender) FROM Admin a")
     List<AdminDTO> fetchAllAdminDTOs();
 
 
